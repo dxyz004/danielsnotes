@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Button } from '@personal-website/ui';
+
+// This will be replaced with real data once we have content
+const portfolioItems = [
+  {
+    id: 'project-one',
+    title: 'Project One',
+    description: 'A web application built with React and TypeScript.',
+    technologies: ['React', 'TypeScript', 'Tailwind CSS'],
+    imageUrl: '/placeholder-project.jpg',
+    projectUrl: 'https://example.com/project-one',
+    githubUrl: 'https://github.com/username/project-one',
+    featured: true
+  },
+  {
+    id: 'project-two',
+    title: 'Project Two',
+    description: 'A mobile app developed with React Native.',
+    technologies: ['React Native', 'JavaScript', 'Firebase'],
+    imageUrl: '/placeholder-project.jpg',
+    projectUrl: 'https://example.com/project-two',
+    githubUrl: 'https://github.com/username/project-two',
+    featured: false
+  },
+  {
+    id: 'project-three',
+    title: 'Project Three',
+    description: 'A personal blog built with Astro and MDX.',
+    technologies: ['Astro', 'MDX', 'Tailwind CSS'],
+    imageUrl: '/placeholder-project.jpg',
+    projectUrl: 'https://example.com/project-three',
+    githubUrl: 'https://github.com/username/project-three',
+    featured: true
+  }
+];
+
+// Get all unique technologies
+const allTechnologies = [...new Set(portfolioItems.flatMap(item => item.technologies))];
+---
+
+<Layout title="Portfolio | Personal Website">
+  <div class="container py-10">
+    <h1 class="text-4xl font-bold mb-8">Portfolio</h1>
+    
+    <!-- Technology filter -->
+    <div class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">Filter by Technology</h2>
+      <div class="flex flex-wrap gap-2">
+        <a href="/portfolio" class="bg-primary text-primary-foreground px-3 py-1 rounded-md text-sm">
+          All
+        </a>
+        {allTechnologies.map(tech => (
+          <a 
+            href={`/portfolio/tech/${tech.toLowerCase().replace(' ', '-')}`} 
+            class="bg-secondary hover:bg-secondary/80 text-secondary-foreground px-3 py-1 rounded-md text-sm"
+          >
+            {tech}
+          </a>
+        ))}
+      </div>
+    </div>
+    
+    <!-- Portfolio grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {portfolioItems.map(item => (
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden">
+          <div class="h-48 bg-muted relative">
+            <img
+              src={item.imageUrl}
+              alt={item.title}
+              class="w-full h-full object-cover"
+              onerror="this.onerror=null; this.src='/placeholder-project.jpg'"
+            />
+            {item.featured && (
+              <div class="absolute top-2 right-2 bg-primary text-primary-foreground px-2 py-1 rounded text-xs">
+                Featured
+              </div>
+            )}
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">{item.title}</h3>
+            <p class="text-muted-foreground mb-4">{item.description}</p>
+            
+            <div class="flex flex-wrap gap-2 mb-4">
+              {item.technologies.map(tech => (
+                <span class="bg-secondary/50 text-secondary-foreground px-2 py-1 rounded-md text-xs">
+                  {tech}
+                </span>
+              ))}
+            </div>
+            
+            <div class="flex gap-3">
+              {item.projectUrl && (
+                <a href={item.projectUrl} target="_blank" rel="noopener noreferrer">
+                  <Button client:load size="sm">View Project</Button>
+                </a>
+              )}
+              {item.githubUrl && (
+                <a href={item.githubUrl} target="_blank" rel="noopener noreferrer">
+                  <Button client:load variant="outline" size="sm">GitHub</Button>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>

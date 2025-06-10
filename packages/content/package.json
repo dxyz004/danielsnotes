@@ -1,0 +1,30 @@
+{
+  "name": "@personal-website/content",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
+    "lint": "eslint . --ext .ts,.tsx",
+    "clean": "rm -rf dist && rm -rf .turbo"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "mdx-bundler": "^9.2.1"
+  },
+  "devDependencies": {
+    "@personal-website/config": "workspace:*",
+    "@personal-website/utils": "workspace:*",
+    "eslint": "^8.53.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  }
+}

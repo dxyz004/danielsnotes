@@ -1,0 +1,76 @@
+---
+// Import styles
+import '../styles/globals.css';
+
+// Define the interface for props
+interface Props {
+  title: string;
+  description?: string;
+}
+
+// Get props with default values
+const { 
+  title, 
+  description = "A personal website with blog and portfolio built with Astro, React, and shadcn/ui" 
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="flex min-h-screen flex-col">
+      <header class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur">
+        <div class="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
+          <div class="flex gap-6 md:gap-10">
+            <a href="/" class="flex items-center space-x-2">
+              <span class="font-bold text-xl">Personal Website</span>
+            </a>
+            <nav class="hidden gap-6 md:flex">
+              <a href="/" class="flex items-center text-sm font-medium text-foreground">
+                Home
+              </a>
+              <a href="/blog" class="flex items-center text-sm font-medium text-foreground">
+                Blog
+              </a>
+              <a href="/portfolio" class="flex items-center text-sm font-medium text-foreground">
+                Portfolio
+              </a>
+              <a href="/about" class="flex items-center text-sm font-medium text-foreground">
+                About
+              </a>
+            </nav>
+          </div>
+        </div>
+      </header>
+      <main class="flex-1">
+        <slot />
+      </main>
+      <footer class="w-full border-t bg-background py-6">
+        <div class="container flex flex-col items-center justify-between gap-4 md:flex-row">
+          <p class="text-sm text-muted-foreground">
+            &copy; {new Date().getFullYear()} Personal Website. All rights reserved.
+          </p>
+          <div class="flex gap-4">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-muted-foreground hover:text-foreground">
+              Twitter
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-muted-foreground hover:text-foreground">
+              GitHub
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="text-muted-foreground hover:text-foreground">
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

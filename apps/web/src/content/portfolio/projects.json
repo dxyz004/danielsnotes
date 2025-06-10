@@ -1,0 +1,32 @@
+[
+  {
+    "id": "project-one",
+    "title": "Project One",
+    "description": "A web application built with React and TypeScript that helps users manage their daily tasks and schedule. Features include drag-and-drop task organization, priority labeling, and integration with calendar applications.",
+    "technologies": ["React", "TypeScript", "Tailwind CSS"],
+    "imageUrl": "/images/portfolio/project-one.jpg",
+    "projectUrl": "https://example.com/project-one",
+    "githubUrl": "https://github.com/username/project-one",
+    "featured": true
+  },
+  {
+    "id": "project-two",
+    "title": "Project Two",
+    "description": "A mobile app developed with React Native that allows users to track their fitness activities, set goals, and monitor progress. Includes features like step counting, workout tracking, and nutrition logging.",
+    "technologies": ["React Native", "JavaScript", "Firebase"],
+    "imageUrl": "/images/portfolio/project-two.jpg",
+    "projectUrl": "https://example.com/project-two",
+    "githubUrl": "https://github.com/username/project-two",
+    "featured": false
+  },
+  {
+    "id": "project-three",
+    "title": "Project Three",
+    "description": "A personal blog built with Astro and MDX, featuring a clean design and fast performance. Includes features like category filtering, search functionality, and responsive layout for all devices.",
+    "technologies": ["Astro", "MDX", "Tailwind CSS"],
+    "imageUrl": "/images/portfolio/project-three.jpg",
+    "projectUrl": "https://example.com/project-three",
+    "githubUrl": "https://github.com/username/project-three",
+    "featured": true
+  }
+]

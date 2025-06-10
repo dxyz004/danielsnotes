@@ -1,0 +1,120 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Button } from '@personal-website/ui';
+import { formatDate } from '@personal-website/utils';
+
+// This will be replaced with real data once we have content
+const posts = [
+  {
+    slug: 'first-post',
+    frontmatter: {
+      title: 'My First Blog Post',
+      date: '2025-04-01',
+      description: 'This is the first blog post on my new Astro site.',
+      categories: ['Astro', 'Web Development'],
+      featured: true
+    }
+  },
+  {
+    slug: 'second-post',
+    frontmatter: {
+      title: 'Getting Started with React',
+      date: '2025-03-25',
+      description: 'A guide to getting started with React in 2025.',
+      categories: ['React', 'JavaScript'],
+      featured: false
+    }
+  },
+  {
+    slug: 'third-post',
+    frontmatter: {
+      title: 'Why I Love shadcn/ui',
+      date: '2025-03-15',
+      description: 'Exploring the benefits of using shadcn/ui for your React projects.',
+      categories: ['UI', 'Design', 'React'],
+      featured: true
+    }
+  }
+];
+
+// Get all unique categories
+const allCategories = [...new Set(posts.flatMap(post => post.frontmatter.categories))];
+---
+
+<Layout title="Blog | Personal Website">
+  <div class="container py-10">
+    <h1 class="text-4xl font-bold mb-8">Blog</h1>
+    
+    <div class="flex flex-col md:flex-row gap-10">
+      <div class="md:w-3/4">
+        <!-- Category selector -->
+        <div class="mb-8">
+          <h2 class="text-xl font-semibold mb-3">Categories</h2>
+          <div class="flex flex-wrap gap-2">
+            <a href="/blog" class="bg-primary text-primary-foreground px-3 py-1 rounded-md text-sm">
+              All
+            </a>
+            {allCategories.map(category => (
+              <a 
+                href={`/blog/category/${category.toLowerCase()}`} 
+                class="bg-secondary hover:bg-secondary/80 text-secondary-foreground px-3 py-1 rounded-md text-sm"
+              >
+                {category}
+              </a>
+            ))}
+          </div>
+        </div>
+        
+        <!-- Blog posts -->
+        <div class="space-y-10">
+          {posts.map(post => (
+            <article class="border-b pb-8 last:border-0">
+              <div class="flex gap-2 mb-2">
+                {post.frontmatter.categories.map(category => (
+                  <a
+                    href={`/blog/category/${category.toLowerCase()}`}
+                    class="inline-block bg-secondary hover:bg-secondary/80 text-secondary-foreground px-3 py-1 rounded-md text-sm"
+                  >
+                    {category}
+                  </a>
+                ))}
+              </div>
+              <h2 class="text-2xl font-bold mb-2">
+                <a href={`/blog/${post.slug}`} class="hover:text-primary">
+                  {post.frontmatter.title}
+                </a>
+              </h2>
+              <p class="text-muted-foreground mb-3">
+                {formatDate(post.frontmatter.date)}
+              </p>
+              <p class="mb-4">{post.frontmatter.description}</p>
+              <a href={`/blog/${post.slug}`}>
+                <Button client:load variant="outline" size="sm">Read Post</Button>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+      
+      <div class="md:w-1/4">
+        <div class="rounded-lg border bg-card p-6 sticky top-24">          
+          <h3 class="text-lg font-semibold mb-4">About This Blog</h3>
+          <p class="text-muted-foreground mb-4">
+            This blog covers topics related to web development, design, and technology.
+            Subscribe to stay updated with the latest articles.
+          </p>
+          <div class="relative">
+            <input
+              type="email"
+              placeholder="your@email.com"
+              class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+            />
+            <Button client:load size="sm" class="mt-2 w-full">
+              Subscribe
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

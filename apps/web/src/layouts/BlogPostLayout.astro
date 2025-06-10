@@ -1,0 +1,97 @@
+---
+// Import the main layout
+import Layout from './Layout.astro';
+import { formatDate } from '@personal-website/utils';
+
+// Define the interface for props
+interface Props {
+  frontmatter: {
+    title: string;
+    date: string;
+    description: string;
+    categories: string[];
+    coverImage?: string;
+  };
+}
+
+// Get props
+const { frontmatter } = Astro.props;
+const {
+  title,
+  date,
+  description,
+  categories,
+  coverImage = 'https://github.com/shadcn.png'
+} = frontmatter;
+
+// Format the date
+const formattedDate = formatDate(date);
+---
+
+<Layout title={title} description={description}>
+  <article class="container py-10 max-w-4xl mx-auto">
+    <div class="space-y-4 mb-8">
+      <div class="flex gap-2">
+        {categories.map((category) => (
+          <a
+            href={`/blog/category/${category.toLowerCase()}`}
+            class="inline-block bg-secondary hover:bg-secondary/80 text-secondary-foreground px-3 py-1 rounded-md text-sm"
+          >
+            {category}
+          </a>
+        ))}
+      </div>
+      <h1 class="text-4xl font-bold">{title}</h1>
+      <p class="text-muted-foreground">{formattedDate}</p>
+      {coverImage && (
+        <img
+          src={coverImage}
+          alt={title}
+          class="rounded-lg w-full h-[300px] md:h-[400px] object-cover"
+        />
+      )}
+      <p class="text-xl text-muted-foreground">{description}</p>
+    </div>
+    
+    <div class="prose prose-lg dark:prose-invert mx-auto">
+      <slot />
+    </div>
+    
+    <div class="mt-12 border-t pt-6">
+      <h3 class="text-xl font-bold mb-4">Continue Reading</h3>
+      <div class="flex flex-col gap-4">
+        <a href="/blog" class="text-primary hover:text-primary/90">
+          ← Back to all blog posts
+        </a>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style is:global>
+  /* Add Tailwind's typography styles */
+  .prose {
+    @apply max-w-none;
+  }
+  .prose a {
+    @apply text-primary hover:text-primary/90 transition-colors no-underline;
+  }
+  .prose h2, .prose h3, .prose h4 {
+    @apply scroll-m-20;
+  }
+  .prose code {
+    @apply rounded bg-muted px-1 py-0.5 font-mono text-sm;
+  }
+  .prose pre {
+    @apply rounded-lg p-4 overflow-x-auto bg-muted;
+  }
+  .prose pre code {
+    @apply bg-transparent px-0 py-0;
+  }
+  .prose img {
+    @apply rounded-lg;
+  }
+  .prose blockquote {
+    @apply border-l-4 border-primary pl-4 italic;
+  }
+</style>
